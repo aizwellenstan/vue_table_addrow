@@ -1,0 +1,92 @@
+<html>
+<head>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Vue.js -->
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app" class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Object</th>
+                <th>Value</th>
+                <th>Day</th>
+                <th>H</th>
+                <th>M</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 各要素を表示 -->
+            <tr v-for="(elem, index) in elements">
+                <td>{{ elem.object }}</td>
+                <td>{{ elem.value }}</td>
+                <td>{{ elem.day }}</td>
+                <td>{{ elem.hour }}</td>
+                <td>{{ elem.minute }}</td>
+                <!-- クリックして要素を削除 -->
+                <td><span v-on:click="remove(index)" class="glyphicon glyphicon-remove"></span></td>
+            </tr>
+            <!-- 新しい要素を追加するための行 -->
+            <tr>
+                <td>
+                    <input id="new-object" type="text">
+                </td>
+                <td>
+                    <input id="new-value" type="text">
+                </td>
+                <td>
+                    <input id="new-day" type="text">
+                </td>
+                <td>
+                    <input id="new-hour" type="text">
+                </td>
+                <td>
+                    <input id="new-minute" type="text">
+                </td>
+                <!-- クリックして要素を追加 -->
+                <td>
+                    <span v-on:click="append" class="glyphicon glyphicon-plus"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+var vm = new Vue({
+    el: '#app',
+    data: {
+        elements: []
+    },
+    methods: {
+        // 要素を追加
+        append: function() {
+            this.elements.push({
+                object: $('#new-object').val(),
+                value: $('#new-value').val(),
+                day: $('#new-day').val(),
+                hour: $('#new-hour').val(),
+                minute: $('#new-minute').val(),
+            });
+            // テキストボックスの中身を空に
+            $('#new-object').val('');
+            $('#new-value').val('');
+            $('#new-day').val('');
+            $('#new-hour').val('');
+            $('#new-minute').val('');
+        },
+        // 要素を削除
+        remove: function(index) {
+            this.elements.splice(index, 1);
+        }
+    }
+});
+</script>
+</body>
+</html>
